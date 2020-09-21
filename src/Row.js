@@ -40,13 +40,17 @@ function Row({ title, fetchUrl, isLargeRow, isTv }) {
   const handleClick = (movie, isTv) => {
     console.log(movie?.name || "");
     console.log(movie?.id || "");
+    console.log(currentMovie);
 
     if (currentMovie === movie) {
+      console.log("same movie");
       setTrailerUrl("");
+      setCurrentMovie({});
     } else {
       async function fetchTrailer() {
+        console.log(movie.media_type);
         const requestUrl = `https://api.themoviedb.org/3/${
-          movie.media_type === "tv" && isTv ? "tv" : "movie"
+          movie.media_type === "tv" || isTv ? "tv" : "movie"
         }/${movie?.id}/videos?api_key=${API_KEY}`;
         let request = await axios.get(requestUrl);
 
